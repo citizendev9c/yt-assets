@@ -1,5 +1,7 @@
 # Perplexity Search API를 활용한 AI 리서치 자동화 가이드
 
+![thumbnail](./thumbnail.png)
+
 ## 📋 목차
 
 - [개요](#개요)
