@@ -1,5 +1,9 @@
 # Gemini Enterprise 활용 가이드
 
+![Gemini Enterprise](https://img.shields.io/badge/gemini-Gemini_Enterprise-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+
+![thumbnail](./thumbnail.png)
+
 Google Gemini Enterprise는 조직 전체가 사용하는 AI 운영체제입니다. 개인용 Gemini가 파일을 하나씩 업로드하고 프롬프트를 입력하는 방식이라면, Enterprise는 회사 내부 데이터를 통합 연결하고 업무 특화 에이전트를 만들어 조직 차원의 생산성을 높이는 플랫폼입니다.
 
 ## 목차
@@ -15,6 +19,9 @@ Google Gemini Enterprise는 조직 전체가 사용하는 AI 운영체제입니�
 ---
 
 ## Gemini 서비스별 비교
+
+![Gemini Enterprise 소개](./gemini-enterprise-intro.png)
+
 
 | 구분 | **일반 Gemini** (개인용) | **워크스페이스 Gemini** | **Gemini Enterprise** (Cloud) |
 |------|--------------------------|--------------------------|--------------------------------|
