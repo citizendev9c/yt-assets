@@ -1,7 +1,5 @@
 # ChatGPT MCP 연동 가이드
 
-![ChatGPT MCP](./thumbnail.png)
-
 ChatGPT에서 MCP(Model Context Protocol)를 연동하여 다양한 외부 서비스와 연결해 업무 생산성을 극대화하는 방법을 안내합니다.
 
 ## 목차
