@@ -6,7 +6,7 @@ AI 에이전트용 업무 메신저 **Buzz**를 내 서버에 직접 올리고, 
 
 노트북을 닫아도 대화방과 AI가 서버에 남아 있는 구조를 만드는 것이 목표입니다.
 
-👉 Hostinger에서 VPS 시작하기: https://hostinger.com/citizendev9c
+👉 Hostinger에서 VPS 시작하기: https://hostinger.com/citizendev9cvps
 🎁 할인 쿠폰: `CITIZENDEV9C`
 
 > ※ 가이드에 해당하는 영상은 Hostinger의 지원을 받아 제작되었습니다.
@@ -427,7 +427,7 @@ private key, 토큰, 원시 자격증명은 어떤 형태로도 출력하지 마
 
 ---
 
-👉 Hostinger에서 VPS 시작하기: https://hostinger.com/citizendev9c
+👉 Hostinger에서 VPS 시작하기: https://hostinger.com/citizendev9cvps
 🎁 할인 쿠폰: `CITIZENDEV9C`
 
 > ※ 이 영상은 Hostinger의 지원을 받아 제작되었습니다.
