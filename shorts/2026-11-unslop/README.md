@@ -38,15 +38,17 @@ https://github.com/heydamir/unslop
 이 저장소의 unslop 스킬을 Claude Code에서 쓸 수 있게 설치해 줘. 끝나면 어디에 무엇을 뒀는지 알려 줘.
 ```
 
-중간에 명령을 실행해도 되는지 물으면 내용을 읽고 허용하면 됩니다. 1분 안에 끝납니다. 설치 뒤 `/unslop`이 안 보이면 Claude Code를 닫았다 다시 여세요.
+중간에 명령을 실행해도 되는지 물으면 내용을 읽고 허용하면 됩니다. 1분 안에 끝납니다. 설치가 끝나면 Claude Code를 새로 열거나 `/reload-plugins`를 입력하세요. 그래야 `/unslop`이 보입니다.
 
 <details>
 <summary>터미널에서 직접 설치하려면</summary>
 
 ```bash
-git clone https://github.com/heydamir/unslop
-mkdir -p ~/.claude/skills && cp -r unslop/skills/unslop ~/.claude/skills/
+claude plugin marketplace add heydamir/unslop
+claude plugin install unslop@heydamir
 ```
+
+예전 방식으로 `~/.claude/skills/`에 복사해 둔 unslop이 있으면 지우세요. 둘 다 있으면 예전 사본이 실행됩니다.
 
 </details>
 
@@ -130,7 +132,7 @@ mkdir -p ~/.claude/skills && cp -r unslop/skills/unslop ~/.claude/skills/
 
 ## 쓰기 전에 알아 둘 것
 
-스킬 파일을 전부 살펴봤고(2026-11-11 기준), 악성 코드나 몰래 정보를 보내는 동작은 찾지 못했습니다. 다만 세 가지는 지켜 주세요.
+스킬 파일을 전부 살펴봤고(2026-11-11 기준), 악성 코드나 몰래 정보를 보내는 동작은 찾지 못했습니다. 그 뒤 바뀐 부분도 2026-11-16에 읽어 봤는데, 오른쪽에서 왼쪽으로 쓰는 언어 안내와 보안 수정, 플러그인 설치 지원이었습니다. 설치하면 그 시점의 최신판이 깔리니 이후에 바뀐 내용은 저희가 확인한 범위 밖입니다. 다만 세 가지는 지켜 주세요.
 
 1. **고치기 전에 폴더를 복사해 두기.** 스킬은 백업 없이 파일을 바로 고칩니다.
 2. **남의 사이트 주소를 줄 때는 믿을 수 있는 곳만.** AI가 그 페이지의 글을 그대로 읽기 때문입니다.

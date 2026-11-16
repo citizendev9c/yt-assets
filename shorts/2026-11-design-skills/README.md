@@ -49,11 +49,13 @@ https://github.com/heydamir/unslop
 <summary>터미널에서 직접 설치하려면</summary>
 
 ```bash
-git clone https://github.com/heydamir/unslop
-mkdir -p ~/.claude/skills && cp -r unslop/skills/unslop ~/.claude/skills/
+claude plugin marketplace add heydamir/unslop
+claude plugin install unslop@heydamir
 ```
 
-한 프로젝트에서만 쓰려면 `~/.claude/skills/` 대신 그 프로젝트 안의 `.claude/skills/`에 복사합니다.
+예전 방식으로 `~/.claude/skills/`에 복사해 둔 unslop이 있으면 지우세요. 둘 다 있으면 예전 사본이 실행됩니다.
+
+한 프로젝트에서만 쓰려면 그 프로젝트 폴더에서 실행하고 둘째 줄 끝에 `--scope local`을 붙입니다.
 
 </details>
 
@@ -256,7 +258,7 @@ Claude Code에서 AI가 화면을 보게 하는 방법은 세 가지입니다(Cl
 - unslop: [heydamir/unslop](https://github.com/heydamir/unslop) · 만든 사람 Damir Sokolovsky(@heydamir) · CC BY 4.0(쓰거나 고쳐서 나눌 때 만든 사람과 저장소 링크를 표기해야 함) · GitHub 별 약 1.6만(2026-11-15 확인)
 - Impeccable: [pbakaus/impeccable](https://github.com/pbakaus/impeccable) · 만든 사람 Paul Bakaus · Apache 2.0 · GitHub 별 약 11만(2026-11-15 확인)
 - Hallmark: [Nutlope/hallmark](https://github.com/Nutlope/hallmark) · README 표기 "Made by Together AI" · MIT · GitHub 별 약 5.5만(2026-11-15 확인). 사진 라이브러리의 사진은 각 사진의 라이선스를 따릅니다.
-- 스킬 파일을 살펴본 날짜: unslop 2026-11-11, Impeccable과 Hallmark 2026-11-14. 세 저장소의 README는 2026-11-15에 다시 확인했습니다.
+- 스킬 파일을 살펴본 날짜: unslop 2026-11-11(그 뒤 바뀐 부분은 2026-11-16), Impeccable과 Hallmark 2026-11-14. 세 저장소의 README는 2026-11-15에 다시 확인했습니다.
 - AI가 화면을 보게 하는 방법과 플러그인 설치 범위: Claude Code 공식 문서 [이미지 다루기](https://code.claude.com/docs/en/common-workflows), [Chrome 연결](https://code.claude.com/docs/en/chrome), [데스크톱 앱](https://code.claude.com/docs/en/desktop), [플러그인 설치](https://code.claude.com/docs/en/discover-plugins) (2026-11-15 확인)
 - 이 문서의 결과는 Claude Code(Opus)로 가상 화면에 103회 직접 테스트한 것입니다. 화면과 모델이 다르면 결과도 달라질 수 있습니다.
 
