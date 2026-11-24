@@ -4,6 +4,7 @@
 
 | 번호 | 날짜 | 가이드 | 짧은 주소 |
 |---|---|---|---|
+| 5 | 2026-11-29 | [AI PPT를 처음부터 회사 양식으로: Claude 디자인 시스템 쓰는 법](2026-11-ppt-house-rules/README.md) | `citizendev9c.com/5` |
 | 4 | 2026-11-26 | [AI 답, 글로만 말고 그림·웹페이지로도 받기 (Claude)](2026-11-answer-as-diagram/README.md) | `citizendev9c.com/4` |
 | 3 | 2026-11-24 | [무료 AI 3대장, 일마다 뭘 맡길까: ChatGPT · Gemini · Claude](2026-11-free-ai-top3/README.md) | `citizendev9c.com/3` |
 | 2 | 2026-11-19 | [디자인 스킬 3개, 언제 뭘 쓸까: unslop · Impeccable · Hallmark](2026-11-design-skills/README.md) | `citizendev9c.com/2` |
