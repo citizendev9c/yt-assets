@@ -2,6 +2,8 @@
 
 ChatGPT, Gemini, Claude를 돈 내지 않는 무료 계정 그대로 써서, 가게 일에서 자주 나오는 일 네 가지를 일마다 두 번 이상씩 똑같이 시켜 봤습니다. 여기엔 그대로 복사해 쓰는 요청문 네 개와, 틀린 답을 막아 준 한 줄을 담았습니다.
 
+쇼츠: https://www.youtube.com/shorts/eAyPdnkvAGk
+
 ## 결론부터
 
 - **그림은 ChatGPT나 Gemini, 나머지는 Claude.** 종합 1등은 Claude였습니다. ChatGPT만큼 정확했고 더 빨랐습니다.
