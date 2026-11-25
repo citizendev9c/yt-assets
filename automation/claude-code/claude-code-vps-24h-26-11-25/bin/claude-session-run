@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# Runs one 24h Claude Code session inside tmux, restarting it when it exits.
+# Started by claude-session@<id>.service. Config: /etc/claude-vps/sessions/<id>.conf
+set -u
+
+id="${1:?usage: claude-session-run <id>}"
+conf="/etc/claude-vps/sessions/${id}.conf"
+log_dir="/var/log/claude-vps"
+log="${log_dir}/${id}.log"
+mkdir -p "$log_dir"
+
+if [ ! -r "$conf" ]; then
+  echo "$(date -Is) missing config $conf" >> "$log"
+  sleep 60
+  exit 1
+fi
+
+# Defaults; the config file overrides them.
+TITLE="$id"
+WORKDIR="/root/projects/${id}"
+MODE="auto"
+TELEGRAM="no"
+AUTOCOMPACT_WINDOW=""
+# Shared defaults for every session (vps-session autocompact <value>), then this session's own config.
+# shellcheck disable=SC1091
+[ -r /etc/claude-vps/defaults.conf ] && . /etc/claude-vps/defaults.conf
+# shellcheck disable=SC1090
+. "$conf"
+# Compact the long-running conversation earlier than the model default (token count, 100000 or more).
+if [ -n "$AUTOCOMPACT_WINDOW" ]; then export CLAUDE_CODE_AUTO_COMPACT_WINDOW="$AUTOCOMPACT_WINDOW"; fi
+
+export HOME=/root
+export PATH="/root/.local/bin:/root/.bun/bin:/usr/local/bin:/usr/bin:/bin"
+cd "$WORKDIR" || { echo "$(date -Is) missing workdir $WORKDIR" >> "$log"; sleep 60; exit 1; }
+
+args=(--permission-mode "$MODE")
+if [ "$TELEGRAM" = "yes" ]; then
+  # Must be the Anthropic-approved plugin (claude-plugins-official) or the channel will not register.
+  args+=(--channels "plugin:${TELEGRAM_PLUGIN:-telegram@claude-plugins-official}")
+fi
+
+fast_exits=0
+while true; do
+  start=$(date +%s)
+  echo "$(date -Is) start (continue last conversation)" >> "$log"
+  claude --continue "${args[@]}" --remote-control "$TITLE"
+  code=$?
+  # --continue exits right away when there is nothing to continue: start fresh once.
+  if [ $(( $(date +%s) - start )) -lt 15 ]; then
+    echo "$(date -Is) continue exited fast (code $code), starting fresh" >> "$log"
+    start=$(date +%s)
+    claude "${args[@]}" --remote-control "$TITLE"
+    code=$?
+  fi
+  if [ $(( $(date +%s) - start )) -lt 15 ]; then
+    fast_exits=$((fast_exits + 1))
+  else
+    fast_exits=0
+  fi
+  # Back off when it keeps dying (for example, the server login expired).
+  if [ "$fast_exits" -ge 3 ]; then
+    echo "$(date -Is) exited fast ${fast_exits} times (code $code); waiting 5 min. Check: claude auth status" >> "$log"
+    sleep 300
+  else
+    echo "$(date -Is) exited (code $code), restarting in 5s" >> "$log"
+    sleep 5
+  fi
+done

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Send a short Telegram message to the people on the bot's allowlist (no Claude session needed).
+#   vps-notify "보낼 글"
+# Token comes from the plugin's .env, recipients from the plugin's access.json (allowFrom).
+set -euo pipefail
+
+text="${1:?사용법: vps-notify \"보낼 글\"}"
+state="/root/.claude/channels/telegram"
+env_file="$state/.env"; access="$state/access.json"
+
+[ -r "$env_file" ] || { echo "토큰 파일이 없어요 (vps-secret set telegram)."; exit 1; }
+[ -r "$access" ] || { echo "허용 목록이 없어요 (텔레그램 페어링을 먼저 하세요)."; exit 1; }
+
+ids=$(python3 -c 'import json,sys; print("\n".join(str(x) for x in json.load(open(sys.argv[1])).get("allowFrom", [])))' "$access")
+[ -n "$ids" ] || { echo "허용된 텔레그램 계정이 없어요 (페어링을 먼저 하세요)."; exit 1; }
+
+token="$(sed -n 's/^TELEGRAM_BOT_TOKEN=//p' "$env_file" | tr -d "\"' \r")"
+sent=0
+while IFS= read -r id; do
+  [ -n "$id" ] || continue
+  # URL (with the token) goes through curl's config on stdin so it never shows in the process list.
+  out="$(printf 'url = "https://api.telegram.org/bot%s/sendMessage"\n' "$token" \
+    | curl -s --max-time 15 -K - --data-urlencode "chat_id=$id" --data-urlencode "text=$text" || true)"
+  printf '%s' "$out" | grep -q '"ok":true' && sent=$((sent + 1))
+done <<<"$ids"
+unset token
+echo "텔레그램으로 보냈어요: ${sent}명"
+[ "$sent" -gt 0 ]

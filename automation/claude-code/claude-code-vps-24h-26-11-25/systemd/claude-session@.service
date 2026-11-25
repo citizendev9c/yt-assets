@@ -1,0 +1,18 @@
+[Unit]
+Description=Claude Code 24h session %i (tmux socket cc-%i)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+User=root
+Environment=HOME=/root
+Environment=TERM=xterm-256color
+# Each session gets its own tmux server (-L), so systemd tracks it on its own.
+ExecStart=/usr/bin/tmux -L cc-%i new-session -d -s main -x 200 -y 50 /usr/local/bin/claude-session-run %i
+ExecStop=/usr/bin/tmux -L cc-%i kill-server
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

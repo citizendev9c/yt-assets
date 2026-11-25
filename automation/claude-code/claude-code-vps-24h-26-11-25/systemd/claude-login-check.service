@@ -1,0 +1,10 @@
+[Unit]
+Description=Remind on Telegram before the server's Claude login ends
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=HOME=/root
+Environment=PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/local/bin/vps-session login-check

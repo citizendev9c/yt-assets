@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily check of the server's Claude login end date
+
+[Timer]
+OnCalendar=*-*-* 09:00 Asia/Seoul
+Persistent=true
+
+[Install]
+WantedBy=timers.target
