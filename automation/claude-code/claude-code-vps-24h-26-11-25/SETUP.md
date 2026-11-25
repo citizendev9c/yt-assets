@@ -1,7 +1,7 @@
 # SETUP.md — Claude에게 주는 셋업 지시서
 
 > 이 문서는 Claude Code가 읽고 따르는 지시서입니다. 사람이 읽을 안내는 README.md에 있습니다.
-> v1.0 (2026-11-25) — 영상에서 맥으로 처음부터 끝까지 돌린 판입니다. 윈도우 경로는 4단계의 주의를 따릅니다.
+> v1.1 (2026-11-26) — 맥과 윈도우 노트북 모두 이 순서로 진행합니다. 윈도우는 4-1에서 확인을 하나 더 합니다.
 
 ## 너(Claude)의 역할
 
@@ -90,19 +90,42 @@ pbcopy < ~/.ssh/hostinger_claude.pub
 - 셋째 줄: 패스프레이즈를 한 번 더 묻고 맥 키체인에 기억시킨다.
 - 맥을 다시 켠 뒤 앱이 서버에 못 붙으면(열쇠를 다시 불러와야 할 때) 터미널에서 `ssh-add --apple-load-keychain` 한 줄.
 
-**윈도우 — PowerShell** 두 번에 나눈다.
+**윈도우 — PowerShell** 세 번에 나눈다. 한 번에 하나씩 안내하고, 사용자가 결과를 알려 주면 다음으로 간다.
 
-① 관리자 PowerShell(시작 메뉴에서 PowerShell 오른쪽 클릭 → **관리자로 실행**)에서 두 줄 — 열쇠를 기억해 주는 프로그램(ssh-agent)을 켠다:
+⓪ 먼저 확인 — 보통 PowerShell에서 한 줄. 시작 메뉴에서 "PowerShell"을 검색해 클릭하면 파란(또는 검은) 창이 열린다. 아래 줄을 붙여 넣고 엔터:
+
+```powershell
+ssh -V
+```
+
+나온 글자를 그대로 알려 달라고 한다. 너는 이렇게 판단한다:
+
+- `OpenSSH_for_Windows_9.4` 이상(예: `9.5`)이면 → ①에서 '새로 깔기'는 건너뛴다.
+- 숫자가 9.4보다 작거나(예: `8.1`, `8.6`), 빨간 글씨로 `ssh`를 찾을 수 없다고 나오면 → ①에서 새로 깐다.
+- 사용자에게는 이렇게 설명한다: "윈도우에 들어 있는 접속 프로그램이 새 버전이어야 Claude 앱이 열쇠를 기억해 두고, 노트북이 잠들었다 깨도 묻지 않고 서버에 다시 붙어요."
+
+같이 묻는다: "Claude 앱을 Microsoft Store에서 받으셨어요, claude.com 홈페이지에서 받으셨어요?" Microsoft Store 앱은 윈도우의 접속 프로그램을 쓰지 않는다. Store에서 받았으면 claude.com/download에서 윈도우용 앱을 받아 새로 깔고, Store 앱은 지우라고 안내한다(로그인만 다시 하면 된다). 모르겠다고 하면: 시작 메뉴 → Microsoft Store → 왼쪽 아래 **라이브러리**에 Claude가 보이면 Store에서 받은 것이다.
+
+① 관리자 PowerShell — 시작 메뉴에서 "PowerShell"을 검색한 뒤 오른쪽 클릭 → **관리자로 실행** → "예".
+
+⓪에서 '새로 깔기'가 필요했으면 먼저 이 한 줄(몇 분 걸린다. 동의를 물으면 `Y` 입력 후 엔터):
+
+```powershell
+winget install "openssh preview"
+```
+
+그다음 두 줄 — 열쇠를 기억해 주는 프로그램(ssh-agent)을 켠다:
 
 ```powershell
 Get-Service ssh-agent | Set-Service -StartupType Automatic
 Start-Service ssh-agent
 ```
 
-- `Cannot find any service with service name 'ssh-agent'`가 나오면 OpenSSH 클라이언트가 없는 것이다: 같은 관리자 PowerShell에서 `Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0` → 끝나면 위 두 줄을 다시.
-- 관리자 PowerShell은 닫는다.
+- `Cannot find any service with service name 'ssh-agent'`가 나오면 접속 프로그램이 빠진 것이다: 같은 창에서 `Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0` → 끝나면 위 두 줄을 다시.
+- `winget`을 찾을 수 없다고 나오면: Microsoft Store에서 **앱 설치 관리자**(App Installer)를 업데이트한 뒤 관리자 PowerShell을 새로 열어 다시 한다.
+- 다 되면 관리자 PowerShell 창을 닫는다. 새로 깔았으면 Claude 앱도 완전히 껐다가(작업 표시줄 오른쪽 아래 Claude 아이콘 → 종료) 다시 켠다.
 
-② 보통 PowerShell(관리자 아님)에서 네 줄:
+② 보통 PowerShell(관리자 아님, ⓪과 같은 방법으로 새로 연다)에서 네 줄:
 
 ```powershell
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.ssh" | Out-Null
@@ -111,9 +134,8 @@ ssh-add "$env:USERPROFILE\.ssh\hostinger_claude"
 Get-Content "$env:USERPROFILE\.ssh\hostinger_claude.pub" | Set-Clipboard
 ```
 
-- 둘째 줄: 패스프레이즈를 두 번 묻는다. `already exists. Overwrite?`가 나오면 `n`.
-- 셋째 줄: 윈도우 ssh-agent가 열쇠를 기억한다(윈도우를 다시 켜도 남는다).
-- 윈도우 경로는 아직 실제 윈도우 노트북에서 끝까지 시험하지 않았다. 특히 데스크톱 앱이 윈도우 ssh-agent에 기억된 열쇠를 쓰는지 확인되지 않았다. 4-3에서 앱이 패스프레이즈 때문에 못 붙으면 멈추고 사용자에게 알린다.
+- 둘째 줄: 열쇠 비밀번호(패스프레이즈)를 두 번 묻는다. 쳐도 화면에 안 보이는 게 정상이다. `already exists. Overwrite?`가 나오면 `n` — 예전에 만든 열쇠를 그대로 쓴다.
+- 셋째 줄: 열쇠 비밀번호를 한 번 더 묻고, 윈도우가 열쇠를 기억한다(윈도우를 다시 켜도 남는다). `Error connecting to agent`가 나오면 ①의 두 줄을 다시 한다.
 
 공통:
 
@@ -133,9 +155,9 @@ chmod 600 /root/.ssh/authorized_keys
 
 1. 앱의 환경 목록에서 New environment → SSH → Add SSH connection.
 2. SSH host `root@서버IP`.
-3. SSH key 칸에 열쇠 파일의 전체 경로를 넣는다(`.pub`가 아닌 파일). 정확한 경로는 노트북에서 이 한 줄로 확인한다:
-   - 맥 터미널: `echo ~/.ssh/hostinger_claude` → `/Users/<이름>/.ssh/hostinger_claude`
-   - 윈도우 PowerShell: `echo "$env:USERPROFILE\.ssh\hostinger_claude"` → `C:\Users\<이름>\.ssh\hostinger_claude`
+3. SSH key 칸:
+   - 맥: 열쇠 파일의 전체 경로를 넣는다(`.pub`가 아닌 파일). 터미널에서 `echo ~/.ssh/hostinger_claude`를 치면 나오는 `/Users/<이름>/.ssh/hostinger_claude`를 그대로 넣는다.
+   - 윈도우: **비워 둔다.** 앱이 4-1에서 윈도우에 기억시킨 열쇠를 알아서 쓴다.
 4. 새 연결로 대화를 하나 열어 `/opt/claude-vps/SETUP.md 4-3-1부터 이어서 해 줘. 내 노트북은 맥이야`(윈도우면 `윈도우야`)라고 보낸다. 이 문장을 네가 사용자의 운영체제에 맞춰 완성해서 보여 준다.
 
 ### 4-3-1. 열쇠로 들어와지는지 확인 (사용자 + 너) — 비밀번호를 끄기 전에 꼭
@@ -145,7 +167,8 @@ chmod 600 /root/.ssh/authorized_keys
 1. (사용자) 노트북 터미널(맥) / PowerShell(윈도우)에서:
    - 맥: `ssh -o PasswordAuthentication=no -i ~/.ssh/hostinger_claude root@서버IP echo KEY-OK`
    - 윈도우: `ssh -o PasswordAuthentication=no -i "$env:USERPROFILE\.ssh\hostinger_claude" root@서버IP echo KEY-OK`
-   → root 비밀번호를 묻지 않고 `KEY-OK`가 나오면 성공. 처음이면 `Are you sure you want to continue connecting`에 `yes`. 패스프레이즈를 물으면 4-1의 키체인(맥)·ssh-agent(윈도우) 등록 줄을 다시 한다. `Permission denied`면 4-2(공개 키 붙이기)를 다시 본다.
+   → root 비밀번호를 묻지 않고 `KEY-OK`가 나오면 성공. 처음이면 `Are you sure you want to continue connecting`에 `yes`. 열쇠 비밀번호를 물으면 4-1의 키체인(맥)·`ssh-add`(윈도우) 줄을 다시 한다. `Permission denied`면 4-2(공개 키 붙이기)를 다시 본다.
+   - 윈도우에서 PowerShell은 되는데 앱만 열쇠로 못 붙으면: ⓪의 `ssh -V`와 앱을 받은 곳을 다시 확인한다. 그래도 안 되면 앱에서 **도움말 → Troubleshooting → Show Logs in File Explorer**로 기록 폴더를 열어 `ssh.log`를 찾게 하고, 그 안에 `no usable Windows OpenSSH client`가 있으면 4-1 ①의 '새로 깔기'를 하고 앱을 껐다 켜게 한다. 노트북 명령은 Git Bash가 아니라 PowerShell에서 친다(앱은 Git Bash의 접속 프로그램을 쓰지 않는다).
 2. (너) 서버 기록에 열쇠 접속이 남았는지 본다:
 
 ```bash

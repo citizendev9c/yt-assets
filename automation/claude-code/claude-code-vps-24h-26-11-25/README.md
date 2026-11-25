@@ -82,7 +82,7 @@ Claude Code를 돌릴 수 있는 곳은 크게 세 군데입니다.
 
 - Hostinger VPS (운영체제 'Ubuntu 24.04 with Claude Code' 템플릿, 영상에서는 KVM 2)
 - Claude 구독(Pro·Max 등) — 서버에서 도는 Claude도 같은 사용량을 씁니다. Team·Enterprise 요금제는 관리자가 원격 연결(Remote Control)과 채널 기능을 먼저 켜 줘야 합니다. 텔레그램 연결(채널)은 아직 연구 미리보기 기능입니다
-- 노트북의 Claude 데스크톱 앱 (맥·윈도우. Claude가 처음에 어느 쪽인지 묻고 그에 맞는 명령만 알려 줍니다. 윈도우 경로는 아직 실제 윈도우 노트북에서 끝까지 시험하지 않았습니다)
+- 노트북의 Claude 데스크톱 앱 (맥·윈도우. Claude가 처음에 어느 쪽인지 묻고 그에 맞는 명령만 알려 줍니다.)
 - 휴대폰 Claude 앱, 텔레그램
 
 ---
