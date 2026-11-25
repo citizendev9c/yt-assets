@@ -16,13 +16,17 @@ Claude Code에 일을 걸어 두고 노트북을 덮었다가, 다시 열어 보
 
 > 🎁 영상 링크
 >
-> ※ 가이드에 해당하는 영상은 Hostinger의 지원을 받아 제작되었습니다.
+> ※ 이 영상은 Hostinger의 지원을 받아 제작되었습니다.
 >
 > ※ 아래 Hostinger 링크·쿠폰코드는 제휴 링크·코드로, 이용하시면 수수료가 지급될 수 있습니다.
 >
-> Hostinger VPS 시작하기: https://hostinger.com/citizendev9cvps
+> 🎁 Hostinger 쿠폰코드: CITIZENDEV9C (결제할 때 쿠폰 칸에 직접 입력해 주세요)
 >
-> 할인 쿠폰 코드: **CITIZENDEV9C** (결제할 때 쿠폰 칸에 직접 입력해 주세요)
+> 👉 Hostinger VPS 시작하기: https://hostinger.com/citizendev9cvps
+>
+> 💻 처음 시작하신다면 영상에서 쓴 KVM 2(2 vCPU · 8GB RAM · 100GB NVMe)를 추천드려요.
+>
+> 🛍️ Hostinger 블랙프라이데이(Black Friday) 할인은 2026년 12월 중순(12월 14일)까지 진행돼요.
 
 ---
 
